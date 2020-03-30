@@ -28,6 +28,7 @@ import {compareLessons, Lesson} from './model/lesson';
 import { CourseEntityService } from './services/course-entity.service';
 import { CoursesResolver } from './services/courses.resolver';
 import { CoursesDataService } from './services/courses-data.service';
+import { LessonEntityService } from './services/lesson-entity.service';
 
 
 export const coursesRoutes: Routes = [
@@ -35,21 +36,24 @@ export const coursesRoutes: Routes = [
     path: '',
     component: HomeComponent,
     resolve: {
-      courese: CoursesResolver
+      courses: CoursesResolver
     }
   },
   {
     path: ':courseUrl',
     component: CourseComponent,
     resolve: {
-      courese: CoursesResolver
+      courses: CoursesResolver
     }
   }
 ];
 
 const entityMetaData: EntityMetadataMap = {
   Course: {
-
+    sortComparer: compareCourses
+  },
+  Lesson: {
+    sortComparer: compareLessons
   }
 };
 
@@ -89,6 +93,7 @@ const entityMetaData: EntityMetadataMap = {
   providers: [
     CoursesHttpService,
     CourseEntityService,
+    LessonEntityService,
     CoursesResolver,
     CoursesDataService
   ]
