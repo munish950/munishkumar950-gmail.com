@@ -60,15 +60,17 @@ const routes: Routes = [
                 strictStateImmutability: true,
                 strictActionImmutability: true,
                 strictActionSerializability: true,
-                strictStateSerializability:true
+                strictStateSerializability: true
             }
         }),
         StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
         EffectsModule.forRoot([]),
+        /*
         StoreRouterConnectingModule.forRoot({
             stateKey: 'router',
             routerState: RouterState.Minimal
         }),
+        */
         EntityDataModule.forRoot({})
     ],
     bootstrap: [AppComponent]

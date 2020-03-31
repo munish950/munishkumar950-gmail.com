@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home/home.component';
 import {CoursesCardListComponent} from './courses-card-list/courses-card-list.component';
 import {EditCourseDialogComponent} from './edit-course-dialog/edit-course-dialog.component';
-import {CoursesHttpService} from './services/courses-http.service';
+// import {CoursesHttpService} from './services/courses-http.service';
 import {CourseComponent} from './course/course.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -91,7 +91,7 @@ const entityMetaData: EntityMetadataMap = {
   ],
   entryComponents: [EditCourseDialogComponent],
   providers: [
-    CoursesHttpService,
+    // CoursesHttpService,
     CourseEntityService,
     LessonEntityService,
     CoursesResolver,
@@ -108,6 +108,4 @@ export class CoursesModule {
     eds.registerMetadataMap(entityMetaData);
     entityDataService.registerService('Course', coursesDataService);
   }
-
-
 }
