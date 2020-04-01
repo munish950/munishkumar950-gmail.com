@@ -9,7 +9,7 @@
     <mat-spinner></mat-spinner>
 
   </div>
-
+  
   <mat-table class="lessons-table mat-elevation-z8" [dataSource]="lessons$ | async">
 
     <ng-container matColumnDef="seqNo">
@@ -44,8 +44,13 @@
 
   </mat-table>
 
+  <mat-paginator [length]="length"
+                [pageSize]="pageSize"             
+               (page)="pageEvent = getServerData(course, $event)">               
+  </mat-paginator>
 
+  <!--
   <button class="bottom-toolbar" mat-raised-button color="accent"
           (click)="loadLessonsPage(course)">Load More</button>
-
+  -->
 </div>

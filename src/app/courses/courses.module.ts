@@ -29,6 +29,7 @@ import { CourseEntityService } from './services/course-entity.service';
 import { CoursesResolver } from './services/courses.resolver';
 import { CoursesDataService } from './services/courses-data.service';
 import { LessonEntityService } from './services/lesson-entity.service';
+import { LessonDataService } from './services/lesson-data.service';
 
 
 export const coursesRoutes: Routes = [
@@ -95,7 +96,8 @@ const entityMetaData: EntityMetadataMap = {
     CourseEntityService,
     LessonEntityService,
     CoursesResolver,
-    CoursesDataService
+    CoursesDataService,
+    LessonDataService
   ]
 })
 export class CoursesModule {
@@ -103,9 +105,11 @@ export class CoursesModule {
   constructor(
     private eds: EntityDefinitionService,
     private entityDataService: EntityDataService,
-    private coursesDataService: CoursesDataService
+    private coursesDataService: CoursesDataService,
+    private lessonDataDervice: LessonDataService
   ) {
     eds.registerMetadataMap(entityMetaData);
-    entityDataService.registerService('Course', coursesDataService);
+    // entityDataService.registerService('Course', coursesDataService);
+    entityDataService.registerServices({'Course': coursesDataService, 'Lesson': lessonDataDervice});
   }
 }

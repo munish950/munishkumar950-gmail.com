@@ -6,6 +6,8 @@ import {Lesson} from '../model/lesson';
 import {concatMap, delay, filter, first, map, shareReplay, tap, withLatestFrom} from 'rxjs/operators';
 import { CourseEntityService } from '../services/course-entity.service';
 import { LessonEntityService } from '../services/lesson-entity.service';
+
+import { PageEvent } from '@angular/material/paginator';
 // import {CoursesHttpService} from '../services/courses-http.service';
 
 
@@ -21,6 +23,12 @@ export class CourseComponent implements OnInit {
   loading$: Observable<boolean>;
 
   lessons$: Observable<Lesson[]>;
+
+  length: number;
+  pageSize: number;
+  // pageSizeOptions: number[] = [5, 10, 25, 100];
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   displayedColumns = ['seqNo', 'description', 'duration'];
 
@@ -47,7 +55,7 @@ export class CourseComponent implements OnInit {
                         withLatestFrom(this.course$),
                         tap(([lessons, course]) => {
                             if (this.nextPage === 0) {
-                              this.loadLessonsPage(course);
+                              this.loadLessonsPage(course, this.nextPage);
                             }
                           }
                         ),
@@ -59,13 +67,18 @@ export class CourseComponent implements OnInit {
 
   }
 
-  loadLessonsPage(course: Course) {
+  loadLessonsPage(course: Course, nextPage: number) {
     this.lessonService.getWithQuery({
       'courseId': course.id.toString(),
-      'pageNumber': this.nextPage.toString(),
+      'pageNumber': nextPage.toString(),
       'pageSize': '3'
     });
-    this.nextPage += 1;
   }
+  /*
+  getServerData(course: Course, event: PageEvent) {
+    console.log(event);
+    this.loadLessonsPage(course, 1);
+  }
+  */
 
 }

@@ -33,8 +33,10 @@ export function searchLessons(req: Request, res: Response) {
 
         console.log(`Retrieving lessons page starting at position ${initialPos}, page size ${pageSize} for course ${courseId}`);
 
+        const lesonCount = lessons.length;
         const lessonsPage = lessons.slice(initialPos, initialPos + pageSize);
+        const lessonSearch = {'result': lessonsPage, 'lessonCount': lesonCount};
 
-        res.status(200).json(lessonsPage);
+        res.status(200).json(lessonSearch);
 
 }
