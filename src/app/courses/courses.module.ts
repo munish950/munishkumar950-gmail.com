@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home/home.component';
 import {CoursesCardListComponent} from './courses-card-list/courses-card-list.component';
 import {EditCourseDialogComponent} from './edit-course-dialog/edit-course-dialog.component';
-// import {CoursesHttpService} from './services/courses-http.service';
+import {CoursesHttpService} from './services/courses-http.service';
 import {CourseComponent} from './course/course.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -24,12 +24,15 @@ import {RouterModule, Routes} from '@angular/router';
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@ngrx/data';
 import {compareCourses, Course} from './model/course';
 
+import { StoreModule } from '@ngrx/store';
+
 import {compareLessons, Lesson} from './model/lesson';
 import { CourseEntityService } from './services/course-entity.service';
 import { CoursesResolver } from './services/courses.resolver';
 import { CoursesDataService } from './services/courses-data.service';
 import { LessonEntityService } from './services/lesson-entity.service';
 import { LessonDataService } from './services/lesson-data.service';
+import { lessonReducer } from './reducers';
 
 
 export const coursesRoutes: Routes = [
@@ -42,10 +45,11 @@ export const coursesRoutes: Routes = [
   },
   {
     path: ':courseUrl',
-    component: CourseComponent,
-    resolve: {
+    component: CourseComponent
+    /*resolve: {
       courses: CoursesResolver
     }
+    */
   }
 ];
 
@@ -76,7 +80,8 @@ const entityMetaData: EntityMetadataMap = {
     MatDatepickerModule,
     MatMomentDateModule,
     ReactiveFormsModule,
-    RouterModule.forChild(coursesRoutes)
+    RouterModule.forChild(coursesRoutes),
+    StoreModule.forFeature('lesson', lessonReducer)
   ],
   declarations: [
     HomeComponent,
@@ -92,7 +97,7 @@ const entityMetaData: EntityMetadataMap = {
   ],
   entryComponents: [EditCourseDialogComponent],
   providers: [
-    // CoursesHttpService,
+    CoursesHttpService,
     CourseEntityService,
     LessonEntityService,
     CoursesResolver,

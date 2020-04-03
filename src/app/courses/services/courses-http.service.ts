@@ -1,5 +1,3 @@
-
-
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -11,7 +9,7 @@ import {Lesson} from '../model/lesson';
 @Injectable()
 export class CoursesHttpService {
 
-    constructor(private http:HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
 
@@ -25,7 +23,7 @@ export class CoursesHttpService {
     findCourseByUrl(courseUrl: string): Observable<Course> {
       return this.http.get<Course>(`/api/courses/${courseUrl}`);
     }
-
+    /*
     findLessons(
         courseId:number,
         pageNumber = 0, pageSize = 3):  Observable<Lesson[]> {
@@ -38,6 +36,19 @@ export class CoursesHttpService {
                 .set('pageSize', pageSize.toString())
         });
     }
+    */
+   // {result: string, lessonCount: string | number}
+   findLessons(
+    courseId: number,
+    pageNumber = 0, pageSize = 3) {
+    return this.http.get('/api/lessons', {
+        params: new HttpParams()
+            .set('courseId', courseId.toString())
+            .set('sortOrder', 'asc')
+            .set('pageNumber', pageNumber.toString())
+            .set('pageSize', pageSize.toString())
+    });
+}
 
 
     saveCourse(courseId: string | number, changes: Partial<Course>) {

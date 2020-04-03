@@ -5,16 +5,18 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
+
 @Injectable()
 export class LessonDataService extends DefaultDataService<Lesson> {
-    constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
+    constructor(http: HttpClient,
+        httpUrlGenerator: HttpUrlGenerator
+    ) {
         super('Lesson', http, httpUrlGenerator);
     }
 // {result: Lesson[], lessonCount: number}
     getWithQuery(params: string | QueryParams
         ): Observable<any> {
         const queryParams: HttpParams = this.buildQueryParams(params);
-        console.log('PARAM', queryParams);
         return this.http.get('/api/lessons', {params: queryParams})
         .pipe(
             map(response => response['result'])
