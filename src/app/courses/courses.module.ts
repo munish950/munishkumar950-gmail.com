@@ -45,11 +45,10 @@ export const coursesRoutes: Routes = [
   },
   {
     path: ':courseUrl',
-    component: CourseComponent
-    /*resolve: {
+    component: CourseComponent,
+    resolve: {
       courses: CoursesResolver
     }
-    */
   }
 ];
 

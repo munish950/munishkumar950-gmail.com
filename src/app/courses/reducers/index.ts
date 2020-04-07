@@ -4,19 +4,25 @@ import { createReducer, on } from '@ngrx/store';
 import { LessonActions } from '../action.types';
 
 export interface LessonState {
-    lesson: Lesson;
+    [key: number]: {[key: number]: Lesson[]};
 }
 
-export const lessonInitialState: LessonState = {
-    lesson: undefined
+export const lessonInitialState = {
+
 };
 
 export const lessonReducer = createReducer(
     lessonInitialState,
 
     on(LessonActions.lessonLoad, (state, action) => {
+        // console.log('Lesson Reducer', action, state);
+        const course = state[action.courseId] || {};
         return {
-            lesson: action.lesson
+            ...state,
+            [action.courseId]: {
+                ...course,
+                [action.page]: action.lesson
+            }
         };
     })
 );
